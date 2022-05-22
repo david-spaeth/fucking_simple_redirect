@@ -1,9 +1,8 @@
 FROM rust:alpine
 RUN adduser -S fucking_user
-USER fucking_user
 WORKDIR /usr/src/fucking_simple_redirect
-COPY . .
-
-RUN cargo install --path .
-
+COPY . src  
+RUN cd src/ && cargo install --path .  && cd ../  && rm -fr src/
+USER fucking_user
+ENV FUCKING_CONFIG=/usr/src/fucking_simple_redirect/domains.config
 CMD ["fucking_simple_redirect"]
