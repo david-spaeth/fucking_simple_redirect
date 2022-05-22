@@ -12,6 +12,7 @@ struct DomainConfig {
 }
 
 impl DomainConfig {
+    
     pub fn new(url: String, temporarily: bool ) -> Self {
         Self {
             url,
@@ -151,7 +152,7 @@ fn handle_read_config_file(path: &str) -> Result<HashMap<String, DomainConfig>, 
 } 
 
 fn main() {
-    let file = env::var("FUCKING_CONFIG").unwrap_or("./domain.config".to_string());
+    let file = env::var("FUCKING_CONFIG").unwrap_or("./domains.config".to_string());
     let domain_config = match handle_read_config_file(&file) {
         Ok(domain_config) => domain_config,
         Err(error) => {
