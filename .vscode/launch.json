@@ -1,0 +1,45 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'fucking_simple_redirect'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=fucking_simple_redirect",
+                    "--package=fucking_simple_redirect"
+                ],
+                "filter": {
+                    "name": "fucking_simple_redirect",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'fucking_simple_redirect'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=fucking_simple_redirect",
+                    "--package=fucking_simple_redirect"
+                ],
+                "filter": {
+                    "name": "fucking_simple_redirect",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
