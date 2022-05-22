@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::net::{TcpStream, TcpListener};
 use std::io::{Write, BufReader, BufRead};
+use std::process::exit;
 use std::{thread, env};
 
 #[derive(Clone)]
@@ -151,12 +152,19 @@ fn handle_read_config_file(path: &str) -> Result<HashMap<String, DomainConfig>, 
 
 fn main() {
     let file = env::var("FUCKING_CONFIG").unwrap_or("./domain.config".to_string());
-    let domain_config = handle_read_config_file(&file).unwrap();
+    let domain_config = match handle_read_config_file(&file) {
+        Ok(domain_config) => domain_config,
+        Err(error) => {
+            eprintln!("{}", error.to_string());
+            exit(1);
+        }
+    };
     let host = env::var("FUCKING_HOST").unwrap_or("127.0.0.1".to_string());
     let port = env::var("FUCKING_PORT").unwrap_or("8080".to_string());
     let listen = format!("{}:{}", host, port );
     let listener = TcpListener::bind(listen).unwrap_or_else(|error| {
-        panic!("Unable to start server: {}", error);
+        eprintln!("Unable to start server: {}", error);
+        exit(2);
     });
 
     if let Ok(local_adrr) = listener.local_addr() {
