@@ -22,7 +22,7 @@ impl DomainConfig {
      fn code(&self) -> &str {
          match self.temporarily {
             true => "302 Found",
-            false =>  "301 Redirect"
+            false =>  "301 Moved Permanently"
         }
     }
 }
@@ -68,12 +68,15 @@ fn handle_redirect(mut stream: &TcpStream, url: &String, domains_config: &HashMa
            
        let code = domain_config.code();
         println!("goto {} with {}", domain_config.url, code); 
-        let response_string = format!("HTTP/1.1 {}\r\nLocation: {}", code, domain_config.url);
+        let response_string = format!("HTTP/1.1 {}\nServer: fucking_simple_redirect\nLocation: {}", code, domain_config.url);
         let response = response_string.as_bytes();
-        match stream.write(response) {
-            Ok(_) => println!("Redirect send"),
+        match stream.write_all(response).and_then(|_|stream.flush()) {
+            Ok(_) =>  {
+                println!("Redirect send")
+            },
             Err(e) => eprintln!("Failed sending response: {}", e),
         }
+
     } else {
         handle_error(&stream)
     }
