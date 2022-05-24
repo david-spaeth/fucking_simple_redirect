@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  fucking:
+    build: 
+      context: .
+    volumes:
+      - ./domains.config:/usr/src/fucking_simple_redirect/domains.config
+    environment:
+      - VIRTUAL_PORT=8080
+      - FUCKING_HOST=0.0.0.0
+      - VIRTUAL_HOST=nginx-redirect.local
