@@ -6,4 +6,4 @@ RUN cd src/ && cargo install --path .  && cd ../  && rm -fr src/
 USER fucking_user
 ENV FUCKING_CONFIG=/usr/src/fucking_simple_redirect/domains.config
 CMD ["fucking_simple_redirect"]
-expose 8080/tcp
+EXPOSE 8080/tcp
