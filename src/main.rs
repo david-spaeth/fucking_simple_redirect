@@ -31,7 +31,7 @@ impl DomainConfig {
                 <head><title>{code}</title></head>
                 <body>
                     <center><h1>{code}</h1></center>
-                    <hr><center>See {url}</center>
+                    <hr><center>See <a href='{url}'> {url} </a></center>
                 </body>
             </html>"
         )
